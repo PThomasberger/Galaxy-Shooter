@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
+        //Movement Input
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -28,7 +29,7 @@ public class Player : MonoBehaviour
 
         transform.Translate(inputDirection * _speed * Time.deltaTime);
 
-        
+        //Movement Boundries
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 1.5f), 0);
 
         if (transform.position.x >= 11.3f)
