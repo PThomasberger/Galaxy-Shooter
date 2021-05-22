@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _shieldAnim;
+    [SerializeField]
     private float _fireRate = .15f;
     private float _canFire = -1f;
     [SerializeField]
@@ -22,14 +24,17 @@ public class Player : MonoBehaviour
     private bool _isTripleShotActive = false;
     [SerializeField]
     private bool _isSpeedBoostActive = false;
+    [SerializeField]
+    private bool _isShieldActive = false;
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _shieldAnim.SetActive(false);
 
-        if(_spawnManager == null)
+        if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL");
         }
@@ -93,9 +98,16 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        if (_isShieldActive == true)
+        {
+            _shieldAnim.SetActive(false);
+            _isShieldActive = false;
+            return;
+        }
+
         _lives--;
-        
-        if(_lives < 1)
+
+        if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
@@ -125,4 +137,11 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         _isSpeedBoostActive = false;
     }
+
+    public void ShieldActive()
+    {
+        _isShieldActive = true;
+        _shieldAnim.SetActive(true);
+    }
+    
 }
