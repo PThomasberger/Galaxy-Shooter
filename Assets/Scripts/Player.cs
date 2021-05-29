@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,13 +14,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
-    private GameObject _shieldAnim;
+    private GameObject _shieldVisual;
+    [SerializeField]
+    private GameObject _scoreText;
     [SerializeField]
     private float _fireRate = .15f;
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private int _enemyPoints;
     private SpawnManager _spawnManager;
+    private UIManager _uiManager;
     [SerializeField]
     private bool _isTripleShotActive = false;
     [SerializeField]
@@ -31,12 +37,19 @@ public class Player : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        _shieldVisual.SetActive(false);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        _shieldAnim.SetActive(false);
 
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL");
+        }
+
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI Manager is NULL");
         }
     }
 
@@ -63,7 +76,7 @@ public class Player : MonoBehaviour
         {
             transform.Translate(inputDirection * _speed * Time.deltaTime);
         }
-        
+
 
         //Movement Boundries
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 1.5f), 0);
@@ -83,7 +96,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireRate;
-            
+
 
             if (_isTripleShotActive == true)
             {
@@ -100,12 +113,14 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-            _shieldAnim.SetActive(false);
+            _shieldVisual.SetActive(false);
             _isShieldActive = false;
             return;
         }
 
         _lives--;
+
+        _uiManager.UpdateLives(_lives);
 
         if (_lives < 1)
         {
@@ -141,7 +156,6 @@ public class Player : MonoBehaviour
     public void ShieldActive()
     {
         _isShieldActive = true;
-        _shieldAnim.SetActive(true);
+        _shieldVisual.SetActive(true);
     }
-    
 }
