@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shieldVisual;
     [SerializeField]
+    private GameObject _thrusterVisual;
+    [SerializeField]
+    private GameObject _damageVisualLeft, _damageVisualRight;
+    [SerializeField]
     private GameObject _scoreText;
     [SerializeField]
     private float _fireRate = .15f;
@@ -32,12 +36,15 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _shieldVisual.SetActive(false);
+        _thrusterVisual.SetActive(false);
+        _damageVisualRight.SetActive(false);
+        _damageVisualLeft.SetActive(false);
+
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
         if (_spawnManager == null)
@@ -52,8 +59,7 @@ public class Player : MonoBehaviour
             Debug.LogError("The UI Manager is NULL");
         }
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         CalculateMovement();
@@ -122,6 +128,15 @@ public class Player : MonoBehaviour
 
         _uiManager.UpdateLives(_lives);
 
+        if (_lives == 2)
+        {
+            _damageVisualRight.SetActive(true);
+        }
+        else if (_lives == 1)
+        {
+            _damageVisualLeft.SetActive(true);
+        }
+
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
@@ -145,12 +160,14 @@ public class Player : MonoBehaviour
     public void SpeedBoostActive()
     {
         _isSpeedBoostActive = true;
+        _thrusterVisual.SetActive(true);
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
 
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
+        _thrusterVisual.SetActive(false);
         _isSpeedBoostActive = false;
     }
 
