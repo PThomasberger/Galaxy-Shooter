@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         RestartLevel();
+        QuitGame();
     }
 
     public void GameOver()
@@ -24,6 +25,15 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
         {
             SceneManager.LoadScene(1); //Current 'Game' Scene
+        }
+    }
+
+    public void QuitGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Application.Quit();
         }
     }
 }
