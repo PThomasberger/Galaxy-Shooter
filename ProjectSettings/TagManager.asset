@@ -7,11 +7,12 @@ TagManager:
   - Enemy
   - Laser
   - TripleShotLaser
+  - Asteroid
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Post Processing
   - Water
   - UI
   - 
