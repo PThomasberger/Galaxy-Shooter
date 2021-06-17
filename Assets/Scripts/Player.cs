@@ -36,6 +36,10 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
+    [SerializeField]
+    private AudioSource _audioSourceLaser;
+    [SerializeField]
+    private AudioSource _audioSourcePowerUp;
     
     void Start()
     {
@@ -58,6 +62,28 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The UI Manager is NULL");
         }
+
+        /*_audioSourceLaser = GetComponent<AudioSource>();
+
+        if (_audioSourceLaser == null)
+        {
+            Debug.LogError("The Player Audio Source is NULL");
+        }
+        else
+        {
+            _audioSourceLaser.playOnAwake = false;
+        }
+
+        _audioSourcePowerUp = GetComponent<AudioSource>();
+
+        if (_audioSourcePowerUp == null)
+        {
+            Debug.LogError("The Player Audio Source is NULL");
+        }
+        else
+        {
+            _audioSourcePowerUp.playOnAwake = false;
+        }*/
     }
     
     void Update()
@@ -112,6 +138,8 @@ public class Player : MonoBehaviour
             {
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.79f, 0), Quaternion.identity);
             }
+
+            _audioSourceLaser.Play();
         }
     }
 
@@ -147,6 +175,7 @@ public class Player : MonoBehaviour
 
     public void TripleShotActive()
     {
+        _audioSourcePowerUp.Play();
         _isTripleShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
@@ -159,6 +188,7 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
+        _audioSourcePowerUp.Play();
         _isSpeedBoostActive = true;
         _thrusterVisual.SetActive(true);
         StartCoroutine(SpeedBoostPowerDownRoutine());
@@ -173,6 +203,7 @@ public class Player : MonoBehaviour
 
     public void ShieldActive()
     {
+        _audioSourcePowerUp.Play();
         _isShieldActive = true;
         _shieldVisual.SetActive(true);
     }
