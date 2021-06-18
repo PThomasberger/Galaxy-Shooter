@@ -9,8 +9,12 @@ public class Enemy : MonoBehaviour
     private UIManager _uiManager;
     private Animator _enemyAnim;
     [SerializeField]
-    private AudioClip _explosionClip;
-    private AudioSource _audioSource;
+    private AudioSource _explosionAudioSource;
+    [SerializeField]
+    private AudioSource _laserAudioSource;
+    [SerializeField]
+    private GameObject _enemyLaserPrefab;
+    private BoxCollider2D _enemyBoxCollider;
     
     void Start()
     {
@@ -28,17 +32,14 @@ public class Enemy : MonoBehaviour
             Debug.LogError("The Enemy Animator is NULL!");
         }
 
-        _audioSource = GetComponent<AudioSource>();
+        _enemyBoxCollider = GetComponent<BoxCollider2D>();
 
-        if (_audioSource == null)
+        if (_enemyBoxCollider == null)
         {
-            Debug.LogError("Enemy Audio Source Is NULL");
+            Debug.LogError("Enemy Box Collider is NULL!");
         }
-        else
-        {
-            _audioSource.playOnAwake = false;
-            _audioSource.clip = _explosionClip;
-        }
+
+        StartCoroutine(InstantiateEnemyLaserRoutine());
     }
 
     // Update is called once per frame
@@ -62,7 +63,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {
@@ -72,24 +73,22 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
-            _audioSource.Play();
-            UpdateScore();
 
+            UpdateScore();
             _enemyAnim.SetTrigger("OnEnemyDeath");
             _speed = 1.0f;
-            GetComponent<BoxCollider2D>().enabled = false;
+            _enemyBoxCollider.enabled = false;
             Destroy(this.gameObject, 2.2f);
         }
         
         if(other.tag == "Laser")
         {
             Destroy(other.gameObject);
-            _audioSource.Play();
+            _explosionAudioSource.Play();
             UpdateScore();
-
             _enemyAnim.SetTrigger("OnEnemyDeath");
             _speed = 1.0f;
-            GetComponent<BoxCollider2D>().enabled = false;
+            _enemyBoxCollider.enabled = false;
             Destroy(this.gameObject, 2.2f);
         }
     }
@@ -97,5 +96,19 @@ public class Enemy : MonoBehaviour
     private void UpdateScore()
     {
         _uiManager.AddPoints();
+    }
+    IEnumerator InstantiateEnemyLaserRoutine()
+    {
+        while (_enemyBoxCollider.enabled == true)
+        {
+            Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, 0.79f, 0), Quaternion.identity);
+            _laserAudioSource.Play();
+            yield return new WaitForSeconds(Random.Range(1.0f, 3.0f));
+
+            if (_enemyBoxCollider.enabled == false)
+            {
+                yield break;
+            }
+        }
     }
 }

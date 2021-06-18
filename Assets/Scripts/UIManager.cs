@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     private Text _gameOverText;
     [SerializeField]
     private Text _restartText;
+    [SerializeField]
+    private AudioSource _audioSource;
 
     private GameManager _gameManager;
     
@@ -47,11 +49,19 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLives(int currentLives)
     {
-        _livesImage.sprite = _livesSprites[currentLives];
+        if (currentLives >= 0)
+        {
+            _livesImage.sprite = _livesSprites[currentLives];
+        }
+        else
+        {
+            _livesImage.sprite = _livesSprites[0];
+        }
     }
 
     public void GameOverSequence()
     {
+        _audioSource.Play();
         StartCoroutine(GameOverTextFlash());
         _restartText.gameObject.SetActive(true);
         _gameManager.GameOver();

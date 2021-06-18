@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
     private AudioSource _audioSourceLaser;
     [SerializeField]
     private AudioSource _audioSourcePowerUp;
+    [SerializeField]
+    private AudioSource _explosionAudioSource;
+    
     
     void Start()
     {
@@ -62,28 +65,6 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The UI Manager is NULL");
         }
-
-        /*_audioSourceLaser = GetComponent<AudioSource>();
-
-        if (_audioSourceLaser == null)
-        {
-            Debug.LogError("The Player Audio Source is NULL");
-        }
-        else
-        {
-            _audioSourceLaser.playOnAwake = false;
-        }
-
-        _audioSourcePowerUp = GetComponent<AudioSource>();
-
-        if (_audioSourcePowerUp == null)
-        {
-            Debug.LogError("The Player Audio Source is NULL");
-        }
-        else
-        {
-            _audioSourcePowerUp.playOnAwake = false;
-        }*/
     }
     
     void Update()
@@ -151,7 +132,7 @@ public class Player : MonoBehaviour
             _isShieldActive = false;
             return;
         }
-
+        
         _lives--;
 
         _uiManager.UpdateLives(_lives);
@@ -159,10 +140,12 @@ public class Player : MonoBehaviour
         if (_lives == 2)
         {
             _damageVisualRight.SetActive(true);
+            _explosionAudioSource.Play();
         }
         else if (_lives == 1)
         {
             _damageVisualLeft.SetActive(true);
+            _explosionAudioSource.Play();
         }
 
         if (_lives < 1)
