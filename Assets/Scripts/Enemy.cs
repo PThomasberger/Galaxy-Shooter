@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _enemyLaserPrefab;
     private BoxCollider2D _enemyBoxCollider;
+    private Player _player;
     
     void Start()
     {
@@ -39,6 +40,13 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy Box Collider is NULL!");
         }
 
+        _player = GameObject.Find("Player").GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.LogError("Player is NULL!");
+        }
+
         StartCoroutine(InstantiateEnemyLaserRoutine());
     }
 
@@ -46,6 +54,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         EnemyMovement();
+        EndGame();
     }
 
     void EnemyStartPosition()
@@ -79,6 +88,8 @@ public class Enemy : MonoBehaviour
             _speed = 1.0f;
             _enemyBoxCollider.enabled = false;
             Destroy(this.gameObject, 2.2f);
+
+
         }
         
         if(other.tag == "Laser")
@@ -109,6 +120,14 @@ public class Enemy : MonoBehaviour
             {
                 yield break;
             }
+        }
+    }
+
+    private void EndGame()
+    {
+        if (_player ==null)
+        {
+            Destroy(this.gameObject);
         }
     }
 }

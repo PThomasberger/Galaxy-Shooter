@@ -8,15 +8,19 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
-    private float _speedBoostSpeed = 8.5f;
+    private float _thrusterSpeed = 7.5f;
+    [SerializeField]
+    private float _speedBoostSpeed = 10.0f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _thrusterVisual;
+    [SerializeField]
     private GameObject _shieldVisual;
     [SerializeField]
-    private GameObject _thrusterVisual;
+    private GameObject _speedBoostVisual;
     [SerializeField]
     private GameObject _damageVisualLeft, _damageVisualRight;
     [SerializeField]
@@ -49,6 +53,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _shieldVisual.SetActive(false);
         _thrusterVisual.SetActive(false);
+        _speedBoostVisual.SetActive(false);
         _damageVisualRight.SetActive(false);
         _damageVisualLeft.SetActive(false);
 
@@ -85,8 +90,14 @@ public class Player : MonoBehaviour
         {
             transform.Translate(inputDirection * _speedBoostSpeed * Time.deltaTime);
         }
+        else if (Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.Translate(inputDirection * _thrusterSpeed * Time.deltaTime);
+            _thrusterVisual.SetActive(true);
+        }
         else
         {
+            _thrusterVisual.SetActive(false);
             transform.Translate(inputDirection * _speed * Time.deltaTime);
         }
 
@@ -130,6 +141,7 @@ public class Player : MonoBehaviour
         {
             _shieldVisual.SetActive(false);
             _isShieldActive = false;
+            _explosionAudioSource.Play();
             return;
         }
         
@@ -173,14 +185,14 @@ public class Player : MonoBehaviour
     {
         _audioSourcePowerUp.Play();
         _isSpeedBoostActive = true;
-        _thrusterVisual.SetActive(true);
+        _speedBoostVisual.SetActive(true);
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
 
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _thrusterVisual.SetActive(false);
+        _speedBoostVisual.SetActive(false);
         _isSpeedBoostActive = false;
     }
 
