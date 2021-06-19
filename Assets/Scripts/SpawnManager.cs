@@ -55,15 +55,16 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.5f, 0f);
-            int randomPowerUp = Random.Range(0, 3);
-            Instantiate(_powerUps[randomPowerUp], posToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
 
             if (_stopSpawning == true)
             {
                 yield break;
             }
+
+            Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.5f, 0f);
+            int randomPowerUp = Random.Range(0, 3);
+            Instantiate(_powerUps[randomPowerUp], posToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }
     }
 
