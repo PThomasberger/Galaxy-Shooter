@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     [SerializeField]
+    private int _shields = 3;
+    [SerializeField]
     private int _enemyPoints;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
@@ -139,9 +141,23 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-            _shieldVisual.SetActive(false);
-            _isShieldActive = false;
-            _explosionAudioSource.Play();
+            _shields--;
+
+            if (_shields == 2)
+            {
+                _shieldVisual.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+            }
+            else if (_shields == 1)
+            {
+                _shieldVisual.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+            }
+
+            if (_shields < 1)
+            {
+                _isShieldActive = false;
+                _shieldVisual.SetActive(false);
+                _explosionAudioSource.Play();
+            }
             return;
         }
         
