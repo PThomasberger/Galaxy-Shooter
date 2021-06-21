@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     private Text _restartText;
     [SerializeField]
     private AudioSource _audioSource;
-
     private GameManager _gameManager;
     
     // Start is called before the first frame update

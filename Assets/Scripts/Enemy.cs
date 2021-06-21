@@ -88,8 +88,6 @@ public class Enemy : MonoBehaviour
             _speed = 1.0f;
             _enemyBoxCollider.enabled = false;
             Destroy(this.gameObject, 2.2f);
-
-
         }
         
         if(other.tag == "Laser")

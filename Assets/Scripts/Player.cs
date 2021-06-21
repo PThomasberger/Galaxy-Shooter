@@ -33,15 +33,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _shields = 3;
     [SerializeField]
+    private int _ammoCount = 15;
+    [SerializeField]
     private int _enemyPoints;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
+    private Text _ammoCountText;
     [SerializeField]
     private bool _isTripleShotActive = false;
     [SerializeField]
     private bool _isSpeedBoostActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
+    [SerializeField]
+    private bool _isAmmoEmpty = false;
     [SerializeField]
     private AudioSource _audioSourceLaser;
     [SerializeField]
@@ -72,6 +77,15 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The UI Manager is NULL");
         }
+
+        _ammoCountText = GameObject.Find("Ammo_Count_Text").GetComponent<Text>();
+        
+        if (_ammoCountText == null)
+        {
+            Debug.LogError("Ammo Count Text is NULL!");
+        }
+
+        _ammoCountText.text = "Ammo: " + _ammoCount;
     }
     
     void Update()
@@ -127,13 +141,21 @@ public class Player : MonoBehaviour
             if (_isTripleShotActive == true)
             {
                 Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                _audioSourceLaser.Play();
             }
-            else
+            
+            if (_isAmmoEmpty == false && _isTripleShotActive == false)
             {
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.79f, 0), Quaternion.identity);
-            }
+                _ammoCount--;
+                _ammoCountText.text = "Ammo: " + _ammoCount;
+                _audioSourceLaser.Play();
 
-            _audioSourceLaser.Play();
+                if (_ammoCount <= 0)
+                {
+                    _isAmmoEmpty = true;
+                }
+            }
         }
     }
 
