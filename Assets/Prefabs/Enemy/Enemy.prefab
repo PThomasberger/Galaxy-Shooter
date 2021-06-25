@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -3039041154742549569}
   - component: {fileID: 7903484544404185619}
   - component: {fileID: 5237521484782903338}
+  - component: {fileID: 584121671539452947}
   - component: {fileID: 7545317382725593800}
   - component: {fileID: 3853571420210039469}
   - component: {fileID: -6370366359615737751}
@@ -53,6 +54,8 @@ MonoBehaviour:
   _explosionAudioSource: {fileID: -6370366359615737751}
   _laserAudioSource: {fileID: 6911085699336471124}
   _enemyLaserPrefab: {fileID: 917662658950960461, guid: 2e34268370aa850438514f5760985244, type: 3}
+  _collider1: {fileID: 584121671539452947}
+  _collider2: {fileID: 7545317382725593800}
 --- !u!212 &7903484544404185619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,6 +128,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &584121671539452947
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938862401582887398}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0070034266, y: 0.037792504}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 5.12, y: 5.12}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.1277413, y: 2.7471156}
+  m_EdgeRadius: 0
 --- !u!61 &7545317382725593800
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,7 +167,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.013898373, y: 0.008957565}
+  m_Offset: {x: 0.013898373, y: 0.16133453}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -149,7 +178,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.2576866, y: 2.8816013}
+  m_Size: {x: 2.2576866, y: 0.697893}
   m_EdgeRadius: 0
 --- !u!95 &3853571420210039469
 Animator:

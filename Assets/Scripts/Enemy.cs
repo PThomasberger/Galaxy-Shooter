@@ -14,9 +14,10 @@ public class Enemy : MonoBehaviour
     private AudioSource _laserAudioSource;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
-    private BoxCollider2D _enemyBoxCollider;
     private Player _player;
-    
+    [SerializeField]
+    private BoxCollider2D _collider1, _collider2;
+
     void Start()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -31,13 +32,6 @@ public class Enemy : MonoBehaviour
         if (_enemyAnim == null)
         {
             Debug.LogError("The Enemy Animator is NULL!");
-        }
-
-        _enemyBoxCollider = GetComponent<BoxCollider2D>();
-
-        if (_enemyBoxCollider == null)
-        {
-            Debug.LogError("Enemy Box Collider is NULL!");
         }
 
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -66,7 +60,7 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -5.5f)
+        if (transform.position.y < -8.5f)
         {
             EnemyStartPosition();
         }
@@ -86,7 +80,8 @@ public class Enemy : MonoBehaviour
             UpdateScore();
             _enemyAnim.SetTrigger("OnEnemyDeath");
             _speed = 1.0f;
-            _enemyBoxCollider.enabled = false;
+            _collider1.enabled = false;
+            _collider2.enabled = false;
             Destroy(this.gameObject, 2.2f);
         }
         
@@ -97,7 +92,8 @@ public class Enemy : MonoBehaviour
             UpdateScore();
             _enemyAnim.SetTrigger("OnEnemyDeath");
             _speed = 1.0f;
-            _enemyBoxCollider.enabled = false;
+            _collider1.enabled = false;
+            _collider2.enabled = false;
             Destroy(this.gameObject, 2.2f);
         }
     }
@@ -108,13 +104,13 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator InstantiateEnemyLaserRoutine()
     {
-        while (_enemyBoxCollider.enabled == true)
+        while (_collider1.enabled == true && _collider2.enabled == true)
         {
             Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, 0.79f, 0), Quaternion.identity);
             _laserAudioSource.Play();
             yield return new WaitForSeconds(Random.Range(1.0f, 3.0f));
 
-            if (_enemyBoxCollider.enabled == false)
+            if (_collider1.enabled == false && _collider2.enabled == false)
             {
                 yield break;
             }
