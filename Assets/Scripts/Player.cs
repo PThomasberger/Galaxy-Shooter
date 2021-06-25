@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     [SerializeField]
     private bool _isAmmoEmpty = false;
+    private bool _isAmmoRefillActive = false;
     [SerializeField]
     private AudioSource _audioSourceLaser;
     [SerializeField]
@@ -136,8 +137,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireRate;
-
-
+            
             if (_isTripleShotActive == true)
             {
                 Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
@@ -150,12 +150,17 @@ public class Player : MonoBehaviour
                 _ammoCount--;
                 _ammoCountText.text = "Ammo: " + _ammoCount;
                 _audioSourceLaser.Play();
-
-                if (_ammoCount <= 0)
-                {
-                    _isAmmoEmpty = true;
-                }
             }
+        }
+
+        if (_ammoCount <= 0)
+        {
+            _isAmmoEmpty = true;
+        }
+
+        if (_ammoCount < 0)
+        {
+            _isAmmoEmpty = false;
         }
     }
 
@@ -239,5 +244,19 @@ public class Player : MonoBehaviour
         _audioSourcePowerUp.Play();
         _isShieldActive = true;
         _shieldVisual.SetActive(true);
+    }
+
+    public void AmmoRefillActive()
+    {
+        _audioSourcePowerUp.Play();
+        _isAmmoRefillActive = true;
+
+        if (_isAmmoRefillActive == true)
+        {
+            _ammoCount = 15;
+            _ammoCountText.text = "Ammo: " + _ammoCount;
+            _isAmmoRefillActive = false;
+        }
+
     }
 }
