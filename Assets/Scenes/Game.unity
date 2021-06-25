@@ -1526,7 +1526,7 @@ MonoBehaviour:
   _scoreText: {fileID: 1908605929}
   _fireRate: 0.15
   _lives: 3
-  _shields: 3
+  _shields: 0
   _ammoCount: 15
   _enemyPoints: 0
   _isTripleShotActive: 0

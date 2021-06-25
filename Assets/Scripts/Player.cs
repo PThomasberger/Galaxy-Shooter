@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     [SerializeField]
-    private int _shields = 3;
+    private int _shields;
     [SerializeField]
     private int _ammoCount = 15;
     [SerializeField]
@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     {
         transform.position = new Vector3(0, 0, 0);
         _shieldVisual.SetActive(false);
+        _shields = 0;
         _thrusterVisual.SetActive(false);
         _speedBoostVisual.SetActive(false);
         _damageVisualRight.SetActive(false);
@@ -143,7 +144,16 @@ public class Player : MonoBehaviour
                 Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
                 _audioSourceLaser.Play();
             }
-            
+
+            if (_ammoCount <= 0)
+            {
+                _isAmmoEmpty = true;
+            }
+            else
+            {
+                _isAmmoEmpty = false;
+            }
+
             if (_isAmmoEmpty == false && _isTripleShotActive == false)
             {
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.79f, 0), Quaternion.identity);
@@ -152,16 +162,6 @@ public class Player : MonoBehaviour
                 _audioSourceLaser.Play();
             }
         }
-
-        if (_ammoCount <= 0)
-        {
-            _isAmmoEmpty = true;
-        }
-
-        if (_ammoCount < 0)
-        {
-            _isAmmoEmpty = false;
-        }
     }
 
     public void Damage()
@@ -169,7 +169,7 @@ public class Player : MonoBehaviour
         if (_isShieldActive == true)
         {
             _shields--;
-
+            
             if (_shields == 2)
             {
                 _shieldVisual.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
@@ -243,7 +243,9 @@ public class Player : MonoBehaviour
     {
         _audioSourcePowerUp.Play();
         _isShieldActive = true;
+        _shields = 3;
         _shieldVisual.SetActive(true);
+        _shieldVisual.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
     }
 
     public void AmmoRefillActive()
