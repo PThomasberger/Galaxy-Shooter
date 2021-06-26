@@ -70,30 +70,31 @@ public class Enemy : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            _collider1.enabled = false;
+            _collider2.enabled = false;
+
             Player player = other.transform.GetComponent<Player>();
 
             if(player != null)
             {
                 player.Damage();
             }
-
+            
             UpdateScore();
             _enemyAnim.SetTrigger("OnEnemyDeath");
             _speed = 1.0f;
-            _collider1.enabled = false;
-            _collider2.enabled = false;
             Destroy(this.gameObject, 2.2f);
         }
         
         if(other.tag == "Laser")
         {
+            _collider1.enabled = false;
+            _collider2.enabled = false;
             Destroy(other.gameObject);
             _explosionAudioSource.Play();
             UpdateScore();
             _enemyAnim.SetTrigger("OnEnemyDeath");
             _speed = 1.0f;
-            _collider1.enabled = false;
-            _collider2.enabled = false;
             Destroy(this.gameObject, 2.2f);
         }
     }
@@ -110,7 +111,7 @@ public class Enemy : MonoBehaviour
             _laserAudioSource.Play();
             yield return new WaitForSeconds(Random.Range(1.0f, 3.0f));
 
-            if (_collider1.enabled == false && _collider2.enabled == false)
+            if (_collider1.enabled == false || _collider2.enabled == false)
             {
                 yield break;
             }
