@@ -261,4 +261,25 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    public void HealthPickupActive()
+    {
+        _audioSourcePowerUp.Play();
+
+        if (_lives < 3)
+        {
+            _lives++;
+
+            _uiManager.UpdateLives(_lives);
+
+            if (_lives == 2)
+            {
+                _damageVisualLeft.SetActive(false);
+            }
+            else if (_lives == 3)
+            {
+                _damageVisualRight.SetActive(false);
+            }
+        } 
+    }
 }
