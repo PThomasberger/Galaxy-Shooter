@@ -8,6 +8,7 @@ TagManager:
   - Laser
   - TripleShotLaser
   - Asteroid
+  - EnemyLaser
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 3800071021
+    locked: 0
+  - name: UI
+    uniqueID: 280569895
     locked: 0

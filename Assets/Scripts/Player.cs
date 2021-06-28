@@ -55,6 +55,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioSource _explosionAudioSource;
     private CameraShake _mainCamera;
+    [SerializeField]
+    private Image _thrusterBar;
+    private bool _thrusterCoolDown = false;
+    private float _thrusterWaitTime = 2.0f;
     
     
     void Start()
@@ -116,15 +120,27 @@ public class Player : MonoBehaviour
         {
             transform.Translate(inputDirection * _speedBoostSpeed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.LeftShift))
+        else if (Input.GetKey(KeyCode.LeftShift) && _thrusterBar.fillAmount > 0)
         {
             transform.Translate(inputDirection * _thrusterSpeed * Time.deltaTime);
             _thrusterVisual.SetActive(true);
+            _thrusterCoolDown = true;
+            if (_thrusterCoolDown == true)
+            {
+                _thrusterBar.fillAmount -= 1.0f / _thrusterWaitTime * Time.deltaTime;
+            }
+        }
+        else if (Input.GetKey(KeyCode.LeftShift) && _thrusterBar.fillAmount == 0)
+        {
+            _thrusterBar.fillAmount = 0;
+            _thrusterVisual.SetActive(false);
+            transform.Translate(inputDirection * _speed * Time.deltaTime);
         }
         else
         {
             _thrusterVisual.SetActive(false);
             transform.Translate(inputDirection * _speed * Time.deltaTime);
+            _thrusterBar.fillAmount += 1.0f / _thrusterWaitTime * Time.deltaTime;
         }
 
 
