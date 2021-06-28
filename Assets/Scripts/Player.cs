@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSourcePowerUp;
     [SerializeField]
     private AudioSource _explosionAudioSource;
+    private CameraShake _mainCamera;
     
     
     void Start()
@@ -88,6 +89,13 @@ public class Player : MonoBehaviour
         }
 
         _ammoCountText.text = "Ammo: " + _ammoCount;
+
+        _mainCamera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+
+        if (_mainCamera == null)
+        {
+            Debug.LogError("Main Camera is NULL!");
+        }
     }
     
     void Update()
@@ -187,7 +195,8 @@ public class Player : MonoBehaviour
             }
             return;
         }
-        
+
+        _mainCamera.CameraShakeActive();
         _lives--;
 
         _uiManager.UpdateLives(_lives);

@@ -50,8 +50,8 @@ public class Stars : MonoBehaviour
 
     private void StarsStartPosition()
     {
-        _stars1.transform.position = new Vector3(0, 12, 3);
-        _stars2.transform.position = new Vector3(0, 52, 3);
+        _stars1.transform.position = new Vector3(0, 12, -1);
+        _stars2.transform.position = new Vector3(0, 52, -1);
     }
 
     private void StarsMovment()
