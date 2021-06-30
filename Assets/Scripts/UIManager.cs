@@ -19,8 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private AudioSource _audioSource;
     private GameManager _gameManager;
-    
-    // Start is called before the first frame update
+
     void Start()
     {
         _gameOverText.gameObject.SetActive(false);
@@ -34,7 +33,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         

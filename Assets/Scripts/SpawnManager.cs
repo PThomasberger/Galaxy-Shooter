@@ -10,15 +10,22 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyContainer;
     [SerializeField]
     private GameObject[] _powerUps;
+    private float _ultraPowerUpDelay = 60f;
+    [SerializeField]
+    private bool _isUltraPowerUpReady = false;
 
     private bool _stopSpawning = false;
+
+    private void Update()
+    {
+        UltraPowerUpActive();
+    }
 
     public void StartSpawning()
     {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerUpRoutine());
     }
-
 
     IEnumerator SpawnEnemyRoutine()
     {
@@ -51,8 +58,27 @@ public class SpawnManager : MonoBehaviour
 
             Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.5f, 0f);
             int randomPowerUp = Random.Range(0, 5);
-            Instantiate(_powerUps[randomPowerUp], posToSpawn, Quaternion.identity);
+
+
+            if (_isUltraPowerUpReady == true)
+            {
+                Instantiate(_powerUps[5], posToSpawn, Quaternion.identity);
+                _isUltraPowerUpReady = false;
+                _ultraPowerUpDelay = Time.time + 60f;
+            }
+            else
+            {
+                Instantiate(_powerUps[randomPowerUp], posToSpawn, Quaternion.identity);
+            }
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+        }
+    }
+
+    private void UltraPowerUpActive()
+    {
+        if (Time.time > _ultraPowerUpDelay)
+        {
+            _isUltraPowerUpReady = true;
         }
     }
 

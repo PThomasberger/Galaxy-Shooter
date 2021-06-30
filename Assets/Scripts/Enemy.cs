@@ -44,7 +44,6 @@ public class Enemy : MonoBehaviour
         StartCoroutine(InstantiateEnemyLaserRoutine());
     }
 
-    // Update is called once per frame
     void Update()
     {
         EnemyMovement();
@@ -72,14 +71,7 @@ public class Enemy : MonoBehaviour
         {
             _collider1.enabled = false;
             _collider2.enabled = false;
-
-            Player player = other.transform.GetComponent<Player>();
-
-            if(player != null)
-            {
-                player.Damage();
-            }
-            
+            _player.Damage();
             UpdateScore();
             _enemyAnim.SetTrigger("OnEnemyDeath");
             _speed = 1.0f;
@@ -94,6 +86,29 @@ public class Enemy : MonoBehaviour
             _explosionAudioSource.Play();
             UpdateScore();
             _enemyAnim.SetTrigger("OnEnemyDeath");
+            _speed = 1.0f;
+            Destroy(this.gameObject, 2.2f);
+        }
+
+        if (other.tag == "LaserBeam")
+        {
+            _collider1.enabled = false;
+            _collider2.enabled = false;
+            _explosionAudioSource.Play();
+            UpdateScore();
+            _enemyAnim.SetTrigger("OnEnemyDeath");
+            _speed = 1.0f;
+            Destroy(this.gameObject, 2.2f);
+        }
+
+        if (other.tag == "Shield")
+        {
+            _collider1.enabled = false;
+            _collider2.enabled = false;
+            _player.Damage();
+            UpdateScore();
+            _enemyAnim.SetTrigger("OnEnemyDeath");
+            _explosionAudioSource.Play();
             _speed = 1.0f;
             Destroy(this.gameObject, 2.2f);
         }
@@ -120,7 +135,7 @@ public class Enemy : MonoBehaviour
 
     private void EndGame()
     {
-        if (_player ==null)
+        if (_player == null)
         {
             Destroy(this.gameObject);
         }

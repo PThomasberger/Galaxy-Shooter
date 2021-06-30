@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 {
     private bool _isGameOver;
 
-    // Update is called once per frame
     void Update()
     {
         RestartLevel();

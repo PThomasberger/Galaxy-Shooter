@@ -6,11 +6,10 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField]
     private float _powerUpSpeed = 3.0f;
-    [SerializeField] //0 = Triple Shot; 1 = Speed; 2 = Shields; 3 = Ammo Refill;
-    private int _powerUpID;
+    [SerializeField] 
+    private int _powerUpID; //0 = Triple Shot; 1 = Speed; 2 = Shields; 3 = Ammo Refill; 4 = Health;
     private Player _player;
 
-    // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -21,7 +20,6 @@ public class PowerUp : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         PowerUpMovement();
@@ -42,26 +40,27 @@ public class PowerUp : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Player player = other.transform.GetComponent<Player>();
-
-            if (player != null)
+            if (_player != null)
             {
                 switch (_powerUpID)
                 {
                     case 0:
-                        player.TripleShotActive();
+                        _player.TripleShotActive();
                         break;
                     case 1:
-                        player.SpeedBoostActive();
+                        _player.SpeedBoostActive();
                         break;
                     case 2:
-                        player.ShieldActive();
+                        _player.ShieldActive();
                         break;
                     case 3:
-                        player.AmmoRefillActive();
+                        _player.AmmoRefillActive();
                         break;
                     case 4:
-                        player.HealthPickupActive();
+                        _player.HealthPickupActive();
+                        break;
+                    case 5:
+                        _player.LaserBeamActive();
                         break;
                     default:
                         Debug.Log("Default Value");

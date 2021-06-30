@@ -9,6 +9,8 @@ TagManager:
   - TripleShotLaser
   - Asteroid
   - EnemyLaser
+  - Shield
+  - LaserBeam
   layers:
   - Default
   - TransparentFX

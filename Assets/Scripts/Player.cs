@@ -59,8 +59,11 @@ public class Player : MonoBehaviour
     private Image _thrusterBar;
     private bool _thrusterCoolDown = false;
     private float _thrusterWaitTime = 2.0f;
-    
-    
+    [SerializeField]
+    private GameObject _laserBeamVisual;
+    [SerializeField]
+    private bool _isLaserBeamActive = false;
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -70,6 +73,7 @@ public class Player : MonoBehaviour
         _speedBoostVisual.SetActive(false);
         _damageVisualRight.SetActive(false);
         _damageVisualLeft.SetActive(false);
+        _laserBeamVisual.SetActive(false);
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
@@ -143,7 +147,6 @@ public class Player : MonoBehaviour
             _thrusterBar.fillAmount += 1.0f / _thrusterWaitTime * Time.deltaTime;
         }
 
-
         //Movement Boundries
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 1.5f), 0);
 
@@ -178,7 +181,7 @@ public class Player : MonoBehaviour
                 _isAmmoEmpty = false;
             }
 
-            if (_isAmmoEmpty == false && _isTripleShotActive == false)
+            if (_isAmmoEmpty == false && _isTripleShotActive == false && _isLaserBeamActive == false)
             {
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.79f, 0), Quaternion.identity);
                 _ammoCount--;
@@ -284,7 +287,6 @@ public class Player : MonoBehaviour
             _ammoCountText.text = "Ammo: " + _ammoCount;
             _isAmmoRefillActive = false;
         }
-
     }
 
     public void HealthPickupActive()
@@ -306,5 +308,19 @@ public class Player : MonoBehaviour
                 _damageVisualRight.SetActive(false);
             }
         } 
+    }
+
+    public void LaserBeamActive()
+    {
+        _isLaserBeamActive = true;
+        _laserBeamVisual.SetActive(true);
+        StartCoroutine(LaserBeamPowerDownRoutine());
+    }
+
+    IEnumerator LaserBeamPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _laserBeamVisual.SetActive(false);
+        _isLaserBeamActive = false;
     }
 }

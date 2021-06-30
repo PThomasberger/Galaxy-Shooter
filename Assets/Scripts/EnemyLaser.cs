@@ -8,7 +8,6 @@ public class EnemyLaser : MonoBehaviour
     private float _speed = 6.0f;
     private Player _player;
 
-    // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -19,7 +18,6 @@ public class EnemyLaser : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         EnemyLaserMovement();
@@ -47,14 +45,14 @@ public class EnemyLaser : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Player player = other.transform.GetComponent<Player>();
-
-            if (player != null)
-            {
-                player.Damage();
-            }
-
+            _player.Damage();
             Destroy(this.gameObject);
+        }
+
+        if (other.tag == "Shield")
+        {
+            _player.Damage();
+            Destroy(this.gameObject, 2.2f);
         }
     }
     private void EndGame()

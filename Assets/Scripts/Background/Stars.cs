@@ -11,14 +11,12 @@ public class Stars : MonoBehaviour
     [SerializeField]
     private float _starsBigSpeed = 3.0f;
 
-    // Start is called before the first frame update
     void Start()
     {
         StarsStartPosition();
         StarsBigStartPosition();
     }
 
-    // Update is called once per frame
     void Update()
     {
         StarsMovment();
