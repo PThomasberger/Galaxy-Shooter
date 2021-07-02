@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
         _speedBoostVisual.SetActive(false);
         _damageVisualRight.SetActive(false);
         _damageVisualLeft.SetActive(false);
+
         _laserBeamVisual.SetActive(false);
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
@@ -96,7 +97,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Ammo Count Text is NULL!");
         }
 
-        _ammoCountText.text = "Ammo: " + _ammoCount;
+        _ammoCountText.text = "Ammo: " + _ammoCount + "/15";
 
         _mainCamera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
 
@@ -185,7 +186,7 @@ public class Player : MonoBehaviour
             {
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.79f, 0), Quaternion.identity);
                 _ammoCount--;
-                _ammoCountText.text = "Ammo: " + _ammoCount;
+                _ammoCountText.text = "Ammo: " + _ammoCount + "/15";
                 _audioSourceLaser.Play();
             }
         }
@@ -284,7 +285,7 @@ public class Player : MonoBehaviour
         if (_isAmmoRefillActive == true)
         {
             _ammoCount = 15;
-            _ammoCountText.text = "Ammo: " + _ammoCount;
+            _ammoCountText.text = "Ammo: " + _ammoCount + "/15";
             _isAmmoRefillActive = false;
         }
     }

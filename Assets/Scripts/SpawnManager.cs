@@ -10,15 +10,15 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyContainer;
     [SerializeField]
     private GameObject[] _powerUps;
-    private float _ultraPowerUpDelay = 60f;
     [SerializeField]
-    private bool _isUltraPowerUpReady = false;
-
+    private float _laserBeamPowerUpDelay = 60f;
+    [SerializeField]
+    private bool _isLaserBeamPowerUpReady = false;
     private bool _stopSpawning = false;
 
-    private void Update()
+    void Update()
     {
-        UltraPowerUpActive();
+        LaserBeamPowerUpActive();
     }
 
     public void StartSpawning()
@@ -58,13 +58,12 @@ public class SpawnManager : MonoBehaviour
 
             Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.5f, 0f);
             int randomPowerUp = Random.Range(0, 5);
-
-
-            if (_isUltraPowerUpReady == true)
+            
+            if (_isLaserBeamPowerUpReady == true)
             {
                 Instantiate(_powerUps[5], posToSpawn, Quaternion.identity);
-                _isUltraPowerUpReady = false;
-                _ultraPowerUpDelay = Time.time + 60f;
+                _isLaserBeamPowerUpReady = false;
+                _laserBeamPowerUpDelay = Time.time + 60f;
             }
             else
             {
@@ -74,11 +73,11 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private void UltraPowerUpActive()
+    private void LaserBeamPowerUpActive()
     {
-        if (Time.time > _ultraPowerUpDelay)
+        if (Time.time > _laserBeamPowerUpDelay)
         {
-            _isUltraPowerUpReady = true;
+            _isLaserBeamPowerUpReady = true;
         }
     }
 

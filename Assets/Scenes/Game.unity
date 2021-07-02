@@ -983,13 +983,14 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 938862401582887398, guid: 675a6a5a12e96ce4e91ed0b6c205ca93, type: 3}
   _enemyContainer: {fileID: 1990228597}
   _powerUps:
-  - {fileID: 5020840294737824165, guid: 1fb676e35199dba40be315cc1f5b4222, type: 3}
-  - {fileID: 5211829457896435033, guid: 3238bdf3dd2fdfb4e9990dbadb020526, type: 3}
+  - {fileID: 5020840294737824165, guid: df4bbdd288d80324fb9c372fd956c7de, type: 3}
+  - {fileID: 5211829457896435033, guid: ba734a54aced57d41bc9db250d0a87b8, type: 3}
   - {fileID: 9089470877554131380, guid: f519d5b90460553409379f5285fa9c48, type: 3}
   - {fileID: 4544662470824556495, guid: 8d05de86065ebdb43b1c4d0d9dd4fb9a, type: 3}
-  - {fileID: 4632174744147584696, guid: b7ae59c97675c8f4fb646a073116826e, type: 3}
-  - {fileID: 7408539002280814707, guid: 603c5e73091e8bf4a92195136b63b484, type: 3}
-  _isUltraPowerUpReady: 0
+  - {fileID: 4632174744147584696, guid: 8a3ca4ddf62512a4dbcd33a15bd9d5fb, type: 3}
+  - {fileID: 7408539002280814707, guid: 72f5018529e27f346a365745cb8fc553, type: 3}
+  _laserBeamPowerUpDelay: 60
+  _isLaserBeamPowerUpReady: 0
 --- !u!4 &774536232
 Transform:
   m_ObjectHideFlags: 0
@@ -1452,8 +1453,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -313.3, y: 109}
-  m_SizeDelta: {x: 100, y: 30}
+  m_AnchoredPosition: {x: -281.35303, y: 109}
+  m_SizeDelta: {x: 163.894, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1135982210
 GameObject:
