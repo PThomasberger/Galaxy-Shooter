@@ -9,6 +9,8 @@ public class PowerUp : MonoBehaviour
     [SerializeField] 
     private int _powerUpID; //0 = Triple Shot; 1 = Speed; 2 = Shields; 3 = Ammo Refill; 4 = Health; 5 = Laser Beam;
     private Player _player;
+    [SerializeField]
+    public float _collectSpeed = 7.0f;
 
     void Start()
     {
@@ -29,6 +31,11 @@ public class PowerUp : MonoBehaviour
     private void PowerUpMovement()
     {
         transform.Translate(Vector3.down * _powerUpSpeed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _collectSpeed * Time.deltaTime);
+        }
 
         if (transform.position.y < -6.0f)
         {
