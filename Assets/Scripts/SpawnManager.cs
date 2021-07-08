@@ -5,7 +5,8 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _enemyPrefab;
+    private GameObject[] _enemyPrefabs;
+    private Enemy _enemy1;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -15,6 +16,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private bool _isLaserBeamPowerUpReady = false;
     private bool _stopSpawning = false;
+
+    void Start()
+    {
+        
+    }
 
     void Update()
     {
@@ -32,8 +38,9 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         while (_stopSpawning == false)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.5f, 0f);
-            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            int randomEnemy = Random.Range(0, 1);
+            Vector3 posToSpawn = new Vector3(Random.Range(-13.4f, 13.4f), 7.5f, 0f);
+            GameObject newEnemy = Instantiate(_enemyPrefabs[randomEnemy], posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(5.0f);
 

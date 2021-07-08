@@ -17,9 +17,12 @@ public class Enemy : MonoBehaviour
     private Player _player;
     [SerializeField]
     private BoxCollider2D _collider1, _collider2;
+    private float _enemyStartPosition;
 
     void Start()
     {
+        _enemyStartPosition = transform.position.x;
+
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         if (_uiManager == null)
@@ -52,10 +55,28 @@ public class Enemy : MonoBehaviour
 
     void EnemyStartPosition()
     {
-        transform.position = new Vector3(Random.Range(-9.4f, 9.4f), 7.5f, 0f);
+        transform.position = new Vector3(Random.Range(-11.4f, 11.4f), 7.5f, 0f);
+
+        _enemyStartPosition = transform.position.x;
     }
 
     void EnemyMovement()
+    {
+        if (_enemyStartPosition <= -9.5f)
+        {
+            EnemyMovementRight();
+        }
+        else if (_enemyStartPosition >= 9.5f)
+        {
+            EnemyMovementLeft();
+        }
+        else
+        {
+            EnemyMovementDown();
+        }
+    }
+
+    void EnemyMovementDown()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
@@ -65,7 +86,29 @@ public class Enemy : MonoBehaviour
         }
     }
 
-        private void OnTriggerEnter2D(Collider2D other)
+    void EnemyMovementRight()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.right * _speed * Time.deltaTime);
+
+        if (transform.position.x > 11.2f || transform.position.y < -8.5f)
+        {
+            EnemyStartPosition();
+        }
+    }
+
+    void EnemyMovementLeft()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.left * _speed * Time.deltaTime);
+
+        if (transform.position.x < -11.2f || transform.position.y < -8.5f)
+        {
+            EnemyStartPosition();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {

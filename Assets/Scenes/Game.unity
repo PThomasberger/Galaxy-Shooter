@@ -980,7 +980,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ee26d847710c4da13589fa9b03977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 938862401582887398, guid: 675a6a5a12e96ce4e91ed0b6c205ca93, type: 3}
+  _enemyPrefabs:
+  - {fileID: 938862401582887398, guid: 8e246e98249451743aed92e58c74132e, type: 3}
   _enemyContainer: {fileID: 1990228597}
   _powerUps:
   - {fileID: 5020840294737824165, guid: df4bbdd288d80324fb9c372fd956c7de, type: 3}
