@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -6370366359615737751}
   - component: {fileID: 6911085699336471124}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy_1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 4
   _explosionAudioSource: {fileID: -6370366359615737751}
-  _laserAudioSource: {fileID: 6911085699336471124}
+  _enemyLaserAudioSource: {fileID: 6911085699336471124}
   _enemyLaserPrefab: {fileID: 917662658950960461, guid: 2e34268370aa850438514f5760985244, type: 3}
   _collider1: {fileID: 584121671539452947}
   _collider2: {fileID: 7545317382725593800}
@@ -306,7 +306,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

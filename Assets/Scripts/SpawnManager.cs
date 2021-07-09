@@ -39,7 +39,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             int randomEnemy = Random.Range(0, 1);
-            Vector3 posToSpawn = new Vector3(Random.Range(-13.4f, 13.4f), 7.5f, 0f);
+            Vector3 posToSpawn = new Vector3(Random.Range(-13.4f, 13.4f), 9f, 0f);
             GameObject newEnemy = Instantiate(_enemyPrefabs[randomEnemy], posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(5.0f);
@@ -63,7 +63,7 @@ public class SpawnManager : MonoBehaviour
                 yield break;
             }
 
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.5f, 0f);
+            Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 8.5f, 0f);
             int randomPowerUp = Random.Range(0, 5);
             
             if (_isLaserBeamPowerUpReady == true)

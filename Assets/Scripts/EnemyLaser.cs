@@ -31,7 +31,7 @@ public class EnemyLaser : MonoBehaviour
 
     void DestroyLaser()
     {
-        if (transform.position.y < -6.0f)
+        if (transform.position.y < -10.0f)
         {
             if (transform.parent != null)
             {

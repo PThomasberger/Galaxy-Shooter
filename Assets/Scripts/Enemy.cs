@@ -11,13 +11,14 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private AudioSource _explosionAudioSource;
     [SerializeField]
-    private AudioSource _laserAudioSource;
+    private AudioSource _enemyLaserAudioSource;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
     private Player _player;
     [SerializeField]
     private BoxCollider2D _collider1, _collider2;
     private float _enemyStartPosition;
+    private bool _canFire = false;
 
     void Start()
     {
@@ -43,7 +44,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Player is NULL!");
         }
-
+        
         StartCoroutine(InstantiateEnemyLaserRoutine());
     }
 
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour
     {
         EnemyMovement();
         EndGame();
+        CanFireLaser();
     }
 
     void EnemyStartPosition()
@@ -161,12 +163,23 @@ public class Enemy : MonoBehaviour
     {
         _uiManager.AddPoints();
     }
+
+    private void CanFireLaser()
+    {
+        if (transform.position.x > -10f && transform.position.x < 10f && transform.position.y < 6.5f)
+        {
+            _canFire = true;
+        }
+    }
+
     IEnumerator InstantiateEnemyLaserRoutine()
     {
         while (_collider1.enabled == true && _collider2.enabled == true)
         {
-            Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, 0.79f, 0), Quaternion.identity);
-            _laserAudioSource.Play();
+            yield return new WaitUntil(() => _canFire == true);
+
+            Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+            _enemyLaserAudioSource.Play();
             yield return new WaitForSeconds(Random.Range(1.0f, 3.0f));
 
             if (_collider1.enabled == false || _collider2.enabled == false)
