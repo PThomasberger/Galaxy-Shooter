@@ -52,7 +52,7 @@ public class EnemyLaser : MonoBehaviour
         if (other.tag == "Shield")
         {
             _player.Damage();
-            Destroy(this.gameObject, 2.2f);
+            Destroy(this.gameObject);
         }
     }
     private void EndGame()

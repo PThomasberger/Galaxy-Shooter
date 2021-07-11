@@ -30,13 +30,7 @@ public class Asteroid : MonoBehaviour
         if (other.tag == "Laser")
         {
             Destroy(other.gameObject);
-            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-            _spawnManager.StartSpawning();
-            Destroy(this.gameObject, 0.15f);
-        }
-
-        if (other.tag == "LaserBeam")
-        {
+            _explosionPrefab.transform.localScale = new Vector3(1f, 1f, 1f);
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             _spawnManager.StartSpawning();
             Destroy(this.gameObject, 0.15f);

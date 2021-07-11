@@ -12,6 +12,9 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     public float _collectSpeed = 7.0f;
 
+    [SerializeField]
+    private GameObject _explosionPrefab;
+
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -77,6 +80,18 @@ public class PowerUp : MonoBehaviour
 
             Destroy(this.gameObject);
         }
+
+        if (other.tag == "EnemyLaser" || other.tag == "Laser")
+        {
+            Destroy(other.gameObject);
+            _explosionPrefab.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            BoxCollider2D _boxCollider = GetComponent<BoxCollider2D>();
+            _boxCollider.enabled = false;
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject, 0.15f);
+        }
+        
+
     }
     private void EndGame()
     {

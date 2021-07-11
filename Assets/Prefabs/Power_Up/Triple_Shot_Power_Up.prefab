@@ -147,6 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _powerUpSpeed: 3
   _powerUpID: 0
+  _collectSpeed: 7
+  _explosionPrefab: {fileID: 3701143449164597976, guid: 0411fa1f6ec5c00479ed450cf9ab14a2, type: 3}
 --- !u!95 &1228484098984121841
 Animator:
   serializedVersion: 3
