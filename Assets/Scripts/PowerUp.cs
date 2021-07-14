@@ -72,6 +72,9 @@ public class PowerUp : MonoBehaviour
                     case 5:
                         _player.LaserBeamActive();
                         break;
+                    case 6:
+                        _player.NegativeHealthPowerUp();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

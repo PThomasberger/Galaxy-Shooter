@@ -64,11 +64,11 @@ public class SpawnManager : MonoBehaviour
             }
 
             Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 8.5f, 0f);
-            int randomPowerUp = Random.Range(0, 5);
+            int randomPowerUp = Random.Range(0, 6);
             
             if (_isLaserBeamPowerUpReady == true)
             {
-                Instantiate(_powerUps[5], posToSpawn, Quaternion.identity);
+                Instantiate(_powerUps[6], posToSpawn, Quaternion.identity);
                 _isLaserBeamPowerUpReady = false;
                 _laserBeamPowerUpDelay = Time.time + 60f;
             }

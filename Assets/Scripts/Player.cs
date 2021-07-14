@@ -324,4 +324,30 @@ public class Player : MonoBehaviour
         _laserBeamVisual.SetActive(false);
         _isLaserBeamActive = false;
     }
+
+    public void NegativeHealthPowerUp()
+    {
+        _mainCamera.CameraShakeActive();
+        _lives--;
+
+        _uiManager.UpdateLives(_lives);
+
+        if (_lives == 2)
+        {
+            _damageVisualRight.SetActive(true);
+            _explosionAudioSource.Play();
+        }
+        else if (_lives == 1)
+        {
+            _damageVisualLeft.SetActive(true);
+            _explosionAudioSource.Play();
+        }
+
+        if (_lives < 1)
+        {
+            _spawnManager.OnPlayerDeath();
+            Destroy(this.gameObject);
+            _uiManager.GameOverSequence();
+        }
+    }
 }
