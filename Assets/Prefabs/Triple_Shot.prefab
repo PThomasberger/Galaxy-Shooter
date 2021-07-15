@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5201798482018103577}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Triple_Shot
   m_TagString: TripleShotLaser
   m_Icon: {fileID: 0}

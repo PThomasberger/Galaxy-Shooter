@@ -19,6 +19,10 @@ public class Enemy : MonoBehaviour
     private BoxCollider2D _collider1, _collider2;
     private float _enemyStartPosition;
     private bool _canFire = false;
+    private RaycastHit2D _laserRaycastLeft;
+    private RaycastHit2D _laserRaycastRight;
+    [SerializeField]
+    private float _raycastLength = 0.5f;
 
     void Start()
     {
@@ -75,6 +79,7 @@ public class Enemy : MonoBehaviour
         else
         {
             EnemyMovementDown();
+            LaserRaycast();
         }
     }
 
@@ -194,6 +199,55 @@ public class Enemy : MonoBehaviour
         if (_player == null)
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    private void LaserRaycast()
+    {
+        int _layerMask = 1 << 6;
+
+        _laserRaycastLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.left, _raycastLength, _layerMask);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.left * _raycastLength, Color.red);
+
+        if (_laserRaycastLeft.collider != null)
+        {
+            StartCoroutine(DodgeRight());
+        }
+
+        _laserRaycastRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.right, _raycastLength, _layerMask);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.right * _raycastLength, Color.red);
+
+        if (_laserRaycastRight.collider != null)
+        {
+            StartCoroutine(DodgeLeft());
+        }
+    }
+
+    IEnumerator DodgeLeft()
+    {
+        Vector2 _currentPos = transform.position;
+        Vector2 _destination = new Vector2(transform.position.x - 1, transform.position.y);
+        float _t = 0f;
+
+        while (_t < 1)
+        {
+            _t += Time.deltaTime / 0.1f;
+            transform.position = Vector2.Lerp(_currentPos, _destination, _t);
+            yield return null;
+        }
+    }
+
+    IEnumerator DodgeRight()
+    {
+        Vector2 _currentPos = transform.position;
+        Vector2 _destination = new Vector2(transform.position.x + 1, transform.position.y);
+        float _t = 0f;
+
+        while (_t < 1)
+        {
+            _t += Time.deltaTime / 0.1f;
+            transform.position = Vector2.Lerp(_currentPos, _destination, _t);
+            yield return null;
         }
     }
 }
