@@ -19,10 +19,11 @@ public class Enemy : MonoBehaviour
     private BoxCollider2D _collider1, _collider2;
     private float _enemyStartPosition;
     private bool _canFire = false;
-    private RaycastHit2D _laserRaycastLeft;
-    private RaycastHit2D _laserRaycastRight;
-    [SerializeField]
+    private RaycastHit2D _laserDetectionLeft;
+    private RaycastHit2D _laserDetectionRight;
     private float _raycastLength = 0.5f;
+    [SerializeField]
+    private GameObject _shieldVisual;
 
     void Start()
     {
@@ -79,7 +80,7 @@ public class Enemy : MonoBehaviour
         else
         {
             EnemyMovementDown();
-            LaserRaycast();
+            LaserDetectionRaycast();
         }
     }
 
@@ -202,23 +203,26 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void LaserRaycast()
+    private void LaserDetectionRaycast()
     {
         int _layerMask = 1 << 6;
 
-        _laserRaycastLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.left, _raycastLength, _layerMask);
+        _laserDetectionLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.left, _raycastLength, _layerMask);
+
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.left * _raycastLength, Color.red);
 
-        if (_laserRaycastLeft.collider != null)
+        if (_laserDetectionLeft.collider != null)
         {
+            //Debug.Log(_laserDetectionLeft.collider);
             StartCoroutine(DodgeRight());
         }
 
-        _laserRaycastRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.right, _raycastLength, _layerMask);
+        _laserDetectionRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.right, _raycastLength, _layerMask);
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 2f), Vector2.right * _raycastLength, Color.red);
 
-        if (_laserRaycastRight.collider != null)
+        if (_laserDetectionRight.collider != null)
         {
+            //Debug.Log(_laserDetectionRight.collider);
             StartCoroutine(DodgeLeft());
         }
     }
@@ -229,11 +233,16 @@ public class Enemy : MonoBehaviour
         Vector2 _destination = new Vector2(transform.position.x - 1, transform.position.y);
         float _t = 0f;
 
-        while (_t < 1)
+        while (_t < 1 && _collider1.enabled == true && _collider2.enabled == true)
         {
             _t += Time.deltaTime / 0.1f;
             transform.position = Vector2.Lerp(_currentPos, _destination, _t);
             yield return null;
+        }
+
+        if (_collider1.enabled == false || _collider2.enabled == false)
+        {
+            yield break;
         }
     }
 
@@ -243,11 +252,16 @@ public class Enemy : MonoBehaviour
         Vector2 _destination = new Vector2(transform.position.x + 1, transform.position.y);
         float _t = 0f;
 
-        while (_t < 1)
+        while (_t < 1 && _collider1.enabled == true && _collider2.enabled == true)
         {
             _t += Time.deltaTime / 0.1f;
             transform.position = Vector2.Lerp(_currentPos, _destination, _t);
             yield return null;
+        }
+
+        if (_collider1.enabled == false || _collider2.enabled == false)
+        {
+            yield break;
         }
     }
 }

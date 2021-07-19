@@ -6,7 +6,6 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] _enemyPrefabs;
-    private Enemy _enemy1;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
