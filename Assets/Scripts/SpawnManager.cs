@@ -8,22 +8,30 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] _enemyPrefabs;
     [SerializeField]
     private GameObject _enemyContainer;
-    [SerializeField]
-    private GameObject[] _powerUps;
-    [SerializeField]
-    private float _laserBeamPowerUpDelay = 60f;
-    [SerializeField]
-    private bool _isLaserBeamPowerUpReady = false;
     private bool _stopSpawning = false;
+
+    [SerializeField]
+    private int[] _table = { 25, 20, 15, 15, 10, 10, 5 };
+    [SerializeField]
+    private int _total;
+    [SerializeField]
+    private int _randomNumber;
+    [SerializeField]
+    private List<GameObject> _powerUps;
+    [SerializeField]
+    private bool _powerUpSpawn;
 
     void Start()
     {
-        
+        foreach(var item in _table)
+        {
+            _total += item;
+        }
     }
 
     void Update()
     {
-        LaserBeamPowerUpActive();
+        RestartPowerUpSpawnRoutine();
     }
 
     public void StartSpawning()
@@ -37,58 +45,66 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         while (_stopSpawning == false)
         {
-            int randomEnemy = Random.Range(0, 1);
-            Vector3 posToSpawn = new Vector3(Random.Range(-13.4f, 13.4f), 9f, 0f);
-            GameObject newEnemy = Instantiate(_enemyPrefabs[randomEnemy], posToSpawn, Quaternion.identity);
-            newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(5.0f);
-
             if (_stopSpawning == true)
             {
                 yield break;
+            }
+            else
+            {
+                int randomEnemy = Random.Range(0, 1);
+                Vector3 posToSpawn = new Vector3(Random.Range(-13.4f, 13.4f), 9f, 0f);
+                GameObject newEnemy = Instantiate(_enemyPrefabs[randomEnemy], posToSpawn, Quaternion.identity);
+                newEnemy.transform.parent = _enemyContainer.transform;
+                yield return new WaitForSeconds(5.0f);
             }
         }
     }
 
     IEnumerator SpawnPowerUpRoutine()
     {
-        yield return new WaitForSeconds(7.0f);
         while (_stopSpawning == false)
         {
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+            Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 8.5f, 0f);
+            _randomNumber = Random.Range(0, _total);
+            Debug.Log(_randomNumber);
+            yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
 
             if (_stopSpawning == true)
             {
+                _powerUpSpawn = false;
                 yield break;
-            }
-
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 8.5f, 0f);
-            int randomPowerUp = Random.Range(0, 6);
-            
-            if (_isLaserBeamPowerUpReady == true)
-            {
-                Instantiate(_powerUps[6], posToSpawn, Quaternion.identity);
-                _isLaserBeamPowerUpReady = false;
-                _laserBeamPowerUpDelay = Time.time + 60f;
             }
             else
             {
-                Instantiate(_powerUps[randomPowerUp], posToSpawn, Quaternion.identity);
+                for (int i = 0; i < _table.Length; i++)
+                {
+                    Debug.Log(i);
+                    if (_randomNumber <= _table[i])
+                    {
+                        Instantiate(_powerUps[i], posToSpawn, Quaternion.identity);
+                        _powerUpSpawn = true;
+                        yield break;
+                    }
+                    else
+                    {
+                        _randomNumber -= _table[i];
+                    }
+                }
             }
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
-        }
-    }
-
-    private void LaserBeamPowerUpActive()
-    {
-        if (Time.time > _laserBeamPowerUpDelay)
-        {
-            _isLaserBeamPowerUpReady = true;
         }
     }
 
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+    }
+
+    private void RestartPowerUpSpawnRoutine()
+    {
+        if (_powerUpSpawn == true)
+        {
+            _powerUpSpawn = false;
+            StartCoroutine(SpawnPowerUpRoutine());
+        }
     }
 }

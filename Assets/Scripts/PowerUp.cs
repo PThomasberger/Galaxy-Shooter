@@ -11,7 +11,6 @@ public class PowerUp : MonoBehaviour
     private Player _player;
     [SerializeField]
     public float _collectSpeed = 7.0f;
-
     [SerializeField]
     private GameObject _explosionPrefab;
 

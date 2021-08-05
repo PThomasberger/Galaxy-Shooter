@@ -983,16 +983,17 @@ MonoBehaviour:
   _enemyPrefabs:
   - {fileID: 938862401582887398, guid: 8e246e98249451743aed92e58c74132e, type: 3}
   _enemyContainer: {fileID: 1990228597}
+  _table: 19000000140000000f0000000f0000000a0000000a00000005000000
+  _total: 0
+  _randomNumber: 0
   _powerUps:
+  - {fileID: 4544662470824556495, guid: 8d05de86065ebdb43b1c4d0d9dd4fb9a, type: 3}
+  - {fileID: 4632174744147584696, guid: 8a3ca4ddf62512a4dbcd33a15bd9d5fb, type: 3}
   - {fileID: 5020840294737824165, guid: df4bbdd288d80324fb9c372fd956c7de, type: 3}
   - {fileID: 5211829457896435033, guid: ba734a54aced57d41bc9db250d0a87b8, type: 3}
   - {fileID: 9089470877554131380, guid: f519d5b90460553409379f5285fa9c48, type: 3}
-  - {fileID: 4544662470824556495, guid: 8d05de86065ebdb43b1c4d0d9dd4fb9a, type: 3}
-  - {fileID: 4632174744147584696, guid: 8a3ca4ddf62512a4dbcd33a15bd9d5fb, type: 3}
   - {fileID: 1734153104583128174, guid: 09b06abfe3b85554f9cb5722e9f9b9bf, type: 3}
   - {fileID: 7408539002280814707, guid: 72f5018529e27f346a365745cb8fc553, type: 3}
-  _laserBeamPowerUpDelay: 60
-  _isLaserBeamPowerUpReady: 0
 --- !u!4 &774536232
 Transform:
   m_ObjectHideFlags: 0
