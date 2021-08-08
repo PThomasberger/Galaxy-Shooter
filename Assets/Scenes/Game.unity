@@ -481,7 +481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 599933067856261968, guid: 9bd6973b93f11e5478e2d3695a8dfcdc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6705335659067267926, guid: 9bd6973b93f11e5478e2d3695a8dfcdc, type: 3}
       propertyPath: _explosionClip
@@ -983,7 +983,7 @@ MonoBehaviour:
   _enemyPrefabs:
   - {fileID: 938862401582887398, guid: 8e246e98249451743aed92e58c74132e, type: 3}
   _enemyContainer: {fileID: 1990228597}
-  _table: 19000000140000000f0000000f0000000a0000000a00000005000000
+  _table: 1e000000140000000f0000000a0000000a0000000a00000005000000
   _total: 0
   _randomNumber: 0
   _powerUps:
@@ -994,6 +994,7 @@ MonoBehaviour:
   - {fileID: 9089470877554131380, guid: f519d5b90460553409379f5285fa9c48, type: 3}
   - {fileID: 1734153104583128174, guid: 09b06abfe3b85554f9cb5722e9f9b9bf, type: 3}
   - {fileID: 7408539002280814707, guid: 72f5018529e27f346a365745cb8fc553, type: 3}
+  _powerUpSpawn: 0
 --- !u!4 &774536232
 Transform:
   m_ObjectHideFlags: 0
@@ -1429,6 +1430,7 @@ GameObject:
   - component: {fileID: 1224930692}
   - component: {fileID: 1224930693}
   - component: {fileID: 1224930694}
+  - component: {fileID: 1224930696}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1521,6 +1523,7 @@ MonoBehaviour:
   _thrusterBar: {fileID: 1135982212}
   _laserBeamVisual: {fileID: 1470088208}
   _isLaserBeamActive: 0
+  _movementAnim: {fileID: 1224930696}
 --- !u!212 &1224930690
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1906,6 +1909,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4010748, y: 3.6292238}
   m_EdgeRadius: 0
+--- !u!95 &1224930696
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224930686}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 734fa257d71872141bbd32dbb7dfe5b2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1371822758
 GameObject:
   m_ObjectHideFlags: 0

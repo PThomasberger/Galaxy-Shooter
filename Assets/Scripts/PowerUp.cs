@@ -34,7 +34,7 @@ public class PowerUp : MonoBehaviour
     {
         transform.Translate(Vector3.down * _powerUpSpeed * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKey(KeyCode.C) && _player != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _collectSpeed * Time.deltaTime);
         }

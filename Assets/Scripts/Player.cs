@@ -63,6 +63,8 @@ public class Player : MonoBehaviour
     private GameObject _laserBeamVisual;
     [SerializeField]
     private bool _isLaserBeamActive = false;
+    [SerializeField]
+    private Animator _movementAnim;
 
     void Start()
     {
@@ -120,6 +122,24 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 inputDirection = new Vector3(horizontalInput, verticalInput, 0);
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            _movementAnim.SetTrigger("LeftTurn");
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            _movementAnim.SetTrigger("LeftTurnCenter");
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            _movementAnim.SetTrigger("RightTurn");
+        }
+        else if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            _movementAnim.SetTrigger("RightTurnCenter");
+        }
 
         if (_isSpeedBoostActive == true)
         {

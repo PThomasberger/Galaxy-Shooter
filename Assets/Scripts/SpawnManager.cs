@@ -9,13 +9,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyContainer;
     private bool _stopSpawning = false;
-
     [SerializeField]
-    private int[] _table = { 25, 20, 15, 15, 10, 10, 5 };
+    private int[] _table = { 30, 20, 15, 10, 10, 10, 5 }; //Ammo, Health, Triple Shot, Speed, Shield, Negative, Laser Beam
     [SerializeField]
-    private int _total;
-    [SerializeField]
-    private int _randomNumber;
+    private int _total, _randomNumber;
     [SerializeField]
     private List<GameObject> _powerUps;
     [SerializeField]
@@ -64,10 +61,9 @@ public class SpawnManager : MonoBehaviour
     {
         while (_stopSpawning == false)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 8.5f, 0f);
-            _randomNumber = Random.Range(0, _total);
-            Debug.Log(_randomNumber);
             yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
+
+            _randomNumber = Random.Range(0, _total);
 
             if (_stopSpawning == true)
             {
@@ -78,11 +74,13 @@ public class SpawnManager : MonoBehaviour
             {
                 for (int i = 0; i < _table.Length; i++)
                 {
-                    Debug.Log(i);
                     if (_randomNumber <= _table[i])
                     {
+                        Vector3 posToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 8.5f, 0f);
                         Instantiate(_powerUps[i], posToSpawn, Quaternion.identity);
+
                         _powerUpSpawn = true;
+
                         yield break;
                     }
                     else
